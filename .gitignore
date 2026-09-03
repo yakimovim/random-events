@@ -434,3 +434,4 @@ FodyWeavers.xsd
 **/appsettings.local.json
 RandomEvents/wwwroot/*
 !RandomEvents/wwwroot/.gitignore
+app.db*

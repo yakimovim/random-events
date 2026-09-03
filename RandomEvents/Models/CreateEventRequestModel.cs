@@ -1,13 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RandomEvents.Storage;
+namespace RandomEvents.Models;
 
-public class Event
+public class CreateEventRequestModel
 {
-  [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-  public int Id { get; set; }
-
   public DateTimeOffset NextMoment { get; set; } = DateTimeOffset.Now;
 
   [Range(minimum: 1, maximum: uint.MaxValue)]

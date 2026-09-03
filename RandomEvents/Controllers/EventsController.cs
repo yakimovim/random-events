@@ -1,0 +1,94 @@
+﻿using Mapster;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using RandomEvents.Models;
+using RandomEvents.Storage;
+
+namespace RandomEvents.Controllers;
+
+[ApiController]
+[Route("api/events")]
+public class EventsController : ControllerBase
+{
+  private readonly StorageContext _db;
+
+  public EventsController(StorageContext db)
+  {
+    _db = db ?? throw new ArgumentNullException(nameof(db));
+  }
+
+  [HttpGet]
+  public async Task<ActionResult<IEnumerable<Event>>> GetAll(CancellationToken cancellationToken)
+  {
+    return Ok(await _db.Events.AsNoTracking().ToArrayAsync(cancellationToken));
+  }
+
+  [HttpGet("{id}")]
+  public async Task<ActionResult<Event>> Get(int id, CancellationToken cancellationToken)
+  {
+    var @event = await _db.Events.FindAsync([id], cancellationToken);
+
+    if (@event is null)
+    {
+      return NotFound();
+    }
+
+    return Ok(@event);
+  }
+
+  [HttpDelete("{id}")]
+  public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
+  {
+    var @event = await _db.Events.FindAsync([id], cancellationToken);
+
+    if (@event is null)
+    {
+      return NotFound();
+    }
+
+    _db.Events.Remove(@event);
+
+    await _db.SaveChangesAsync(cancellationToken);
+
+    return Ok();
+  }
+
+  [HttpPost]
+  public async Task<ActionResult<Event>> Create(CreateEventRequestModel model, CancellationToken cancellationToken)
+  {
+    if (!ModelState.IsValid)
+    {
+      return BadRequest(ModelState);
+    }
+
+    var @event = model.Adapt<Event>();
+
+    _db.Events.Add(@event);
+
+    await _db.SaveChangesAsync(cancellationToken);
+
+    return Ok(@event);
+  }
+
+  [HttpPut("{id}")]
+  public async Task<ActionResult<Event>> Update(int id, CreateEventRequestModel model, CancellationToken cancellationToken)
+  {
+    if (!ModelState.IsValid)
+    {
+      return BadRequest(ModelState);
+    }
+
+    var @event = await _db.Events.FindAsync([id], cancellationToken);
+
+    if (@event is null)
+    {
+      return NotFound();
+    }
+
+    model.Adapt(@event);
+
+    await _db.SaveChangesAsync(cancellationToken);
+
+    return Ok(@event);
+  }
+}

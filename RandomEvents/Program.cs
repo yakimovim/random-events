@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using RandomEvents.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +11,8 @@ builder.Configuration
 
 // Add services to the container.
 
-builder.Services.AddDbContext<StorageContext>(options  => {
-  options.UseSqlite("app.data");
+builder.Services.AddDbContext<StorageContext>(optionsBuilder => {
+  optionsBuilder.UseSqlite("Data Source=app.db");
 });
 
 builder.Services.AddControllers();
