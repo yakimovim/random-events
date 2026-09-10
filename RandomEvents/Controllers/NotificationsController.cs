@@ -34,7 +34,7 @@ public class NotificationsController : ControllerBase
     return Ok(notification);
   }
 
-  [HttpDelete]
+  [HttpDelete("{id}")]
   public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
   {
     var notification = await _db.Notifications.FindAsync([id], cancellationToken);

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using Quartz;
+using RandomEvents.Services;
 using RandomEvents.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,18 @@ builder.Configuration
 builder.Services.AddDbContext<StorageContext>(optionsBuilder => {
   optionsBuilder.UseSqlite("Data Source=app.db");
 });
+
+builder.Services.AddQuartz(optionsBuilder =>
+{
+  optionsBuilder.UseInMemoryStore();
+});
+builder.Services.AddQuartzHostedService(options => 
+{
+  options.WaitForJobsToComplete = true;
+});
+
+builder.Services.AddSingleton<SchedulerService>();
+builder.Services.AddHostedService<InitialSchedulingService>();
 
 builder.Services.AddControllers();
 
