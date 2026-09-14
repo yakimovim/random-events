@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Quartz;
+using RandomEvents.Hubs;
 using RandomEvents.Services;
 using RandomEvents.Storage;
 
@@ -25,6 +26,8 @@ builder.Services.AddQuartzHostedService(options =>
   options.WaitForJobsToComplete = true;
 });
 
+builder.Services.AddSignalR();
+
 builder.Services.AddSingleton<SchedulerService>();
 builder.Services.AddHostedService<InitialSchedulingService>();
 
@@ -36,9 +39,21 @@ var app = builder.Build();
 
 app.UseStaticFiles();
 
+//app.UseWebSockets();
+
 app.UseRouting();
 
 app.UseAuthorization();
+
+/*
+app.UseCors(builder => builder
+  .WithOrigins("http://localhost:3000") // URL вашего React-приложения
+  .AllowAnyMethod()
+  .AllowAnyHeader()
+  .AllowCredentials()); // КРИТИЧЕСКИ ВАЖНО для SignalR
+*/
+
+app.MapHub<NotificationsHub>("/api/notifications-hub");
 
 app.MapControllers();
 

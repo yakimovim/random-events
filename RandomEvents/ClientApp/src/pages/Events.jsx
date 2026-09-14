@@ -1,97 +1,78 @@
-import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useState, useEffect } from "react";
 import EventForm from "../forms/EventForm";
 import DeleteDialog from "../forms/DeleteDialog";
 import moment from "moment";
+import {
+  getEvents,
+  createEvent,
+  updateEvent,
+  deleteEvent,
+} from "../utils/events-api";
 
 export function Events() {
-  const events = useLoaderData();
-
-  const [cachedEvents, setCachedEvents] = useState(events);
+  const [eventsRequestHash, setEventsRequestHash] = useState(0);
+  const [events, setEvents] = useState([]);
 
   const [currentEvent, setCurrentEvent] = useState(null);
   const [currentDialog, setCurrentDialog] = useState("");
 
-  function addEvent() {
+  useEffect(() => {
+    async function get() {
+      const events = await getEvents();
+
+      setEvents(events);
+    }
+
+    get();
+  }, [eventsRequestHash]);
+
+  function openCreateEventDialog() {
     setCurrentEvent(null);
     setCurrentDialog("add");
   }
 
-  function sendNewEventToBackend(newEventData) {
-    async function sendToServer() {
-      const response = await fetch("/api/events", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...newEventData }),
-      });
+  function createNewEvent(newEventData) {
+    async function create() {
+      const newEvent = await createEvent(newEventData);
 
-      if (!response.ok) {
-        throw new Error("Unable to create event");
-      }
-
-      const newEvent = await response.json();
-
-      setCachedEvents([...cachedEvents, newEvent]);
+      setEvents((events) => [...events, newEvent]);
     }
 
-    sendToServer();
+    create();
   }
 
-  function sendEditEventToBackend(eventData) {
-    async function sendToServer() {
-      const response = await fetch(`/api/events/${eventData.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...eventData }),
-      });
+  function openEditEventDialog(event) {
+    setCurrentEvent(event);
+    setCurrentDialog("edit");
+  }
 
-      if (!response.ok) {
-        throw new Error("Unable to update event");
-      }
+  function updateExistingEvent(eventData) {
+    async function update() {
+      const event = await updateEvent(eventData.id, eventData);
 
-      const event = await response.json();
-
-      setCachedEvents(
-        [...cachedEvents].map((oldEvent) =>
+      setEvents((events) =>
+        [...events].map((oldEvent) =>
           oldEvent.id !== eventData.id ? oldEvent : event,
         ),
       );
     }
 
-    sendToServer();
+    update();
   }
 
-  function deleteEventFromBackend(id) {
-    async function removeFromServer() {
-      const response = await fetch(`/api/events/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Unable to delete event");
-      }
-
-      setCachedEvents([...cachedEvents].filter((event) => event.id !== id));
-    }
-
-    removeFromServer();
-  }
-
-  function editEvent(event) {
-    setCurrentEvent(event);
-    setCurrentDialog("edit");
-  }
-
-  function deleteEvent(event) {
+  function openDeleteEventDialog(event) {
     setCurrentEvent(event);
     setCurrentDialog("delete");
+  }
+
+  function deleteExistingEvent(id) {
+    async function remove() {
+      await deleteEvent(id);
+
+      setEvents((events) => [...events].filter((event) => event.id !== id));
+    }
+
+    remove();
   }
 
   function importEvents() {
@@ -120,7 +101,7 @@ export function Events() {
         });
 
         if (response.ok) {
-          window.location.reload();
+          setEventsRequestHash((state) => state + 1);
         } else {
           console.error("Ошибка сервера при отправке:", response.status);
         }
@@ -135,7 +116,7 @@ export function Events() {
 
   function exportEvents() {
     const code = JSON.stringify(
-      [...cachedEvents].map((event) => {
+      [...events].map((event) => {
         return { ...event, id: undefined };
       }),
     );
@@ -169,10 +150,10 @@ export function Events() {
           );
           data.nextMoment = localMoment.toISOString(true);
           if (currentEvent === null) {
-            sendNewEventToBackend(data);
+            createNewEvent(data);
           } else {
             data.id = currentEvent.id;
-            sendEditEventToBackend(data);
+            updateExistingEvent(data);
           }
         }}
         event={currentEvent}
@@ -188,11 +169,14 @@ export function Events() {
           setCurrentEvent(null);
         }}
         onDelete={() => {
-          deleteEventFromBackend(currentEvent.id);
+          deleteExistingEvent(currentEvent.id);
         }}
       />
       <div className="mx-4 flex gap-2">
-        <div className="underline cursor-pointer" onClick={addEvent}>
+        <div
+          className="underline cursor-pointer"
+          onClick={openCreateEventDialog}
+        >
           Add event
         </div>
         <div className="underline cursor-pointer" onClick={exportEvents}>
@@ -203,7 +187,7 @@ export function Events() {
         </div>
       </div>
       <div className="flex flex-col">
-        {cachedEvents.map((e) => {
+        {events.map((e) => {
           return (
             <div
               className="flex flex-col bg-blue-400 p-2.5 m-4 rounded-sm"
@@ -218,13 +202,13 @@ export function Events() {
               <div className="flex gap-2">
                 <div
                   className="underline cursor-pointer"
-                  onClick={() => editEvent(e)}
+                  onClick={() => openEditEventDialog(e)}
                 >
                   Edit
                 </div>
                 <div
                   className="underline cursor-pointer"
-                  onClick={() => deleteEvent(e)}
+                  onClick={() => openDeleteEventDialog(e)}
                 >
                   Delete
                 </div>

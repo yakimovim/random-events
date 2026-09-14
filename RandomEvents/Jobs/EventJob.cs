@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Quartz;
+using RandomEvents.Hubs;
 using RandomEvents.Services;
 using RandomEvents.Storage;
 
@@ -9,13 +11,17 @@ internal class EventJob : IJob
 {
   private readonly StorageContext _db;
   private readonly SchedulerService _schedulerService;
+  private readonly IHubContext<NotificationsHub> _hubContext;
 
   public EventJob(
     StorageContext db,
-    SchedulerService schedulerService)
+    SchedulerService schedulerService,
+    IHubContext<NotificationsHub> hubContext
+    )
   {
     _db = db ?? throw new ArgumentNullException(nameof(db));
     _schedulerService = schedulerService ?? throw new ArgumentNullException(nameof(schedulerService));
+    _hubContext = hubContext ?? throw new ArgumentNullException(nameof(hubContext));
   }
 
   public async ValueTask Execute(
@@ -32,5 +38,7 @@ internal class EventJob : IJob
     }
 
     await _schedulerService.ScheduleEventAsync(@event, cancellationToken);
+
+    await _hubContext.Clients.All.SendAsync("NewNotifications", cancellationToken);
   }
 }
