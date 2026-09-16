@@ -83,7 +83,10 @@ export default function EventForm({ isOpen, onClose, onSubmitSuccess, event }) {
           <FormError error={errors.daysSpread} />
         </div>
 
-        <button type="submit" className="p-2 cursor-pointer">
+        <button
+          type="submit"
+          className="p-2 cursor-pointer bg-blue-500 text-white"
+        >
           Отправить
         </button>
       </form>

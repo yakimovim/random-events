@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import EventForm from "../forms/EventForm";
 import DeleteDialog from "../forms/DeleteDialog";
+import EventCard from "../components/EventCard";
 import moment from "moment";
 import {
   getEvents,
@@ -177,43 +178,27 @@ export function Events() {
           className="underline cursor-pointer"
           onClick={openCreateEventDialog}
         >
-          Add event
+          Добавить событие
         </div>
-        <div className="underline cursor-pointer" onClick={exportEvents}>
-          Export
+        <div
+          className="underline cursor-pointer ml-auto"
+          onClick={exportEvents}
+        >
+          Экспорт
         </div>
         <div className="underline cursor-pointer" onClick={importEvents}>
-          Import
+          Импорт
         </div>
       </div>
       <div className="flex flex-col">
         {events.map((e) => {
           return (
-            <div
-              className="flex flex-col bg-blue-400 p-2.5 m-4 rounded-sm"
+            <EventCard
               key={e.id}
-            >
-              <div>{e.nextMoment}</div>
-              <div className="text-2xl">{e.name}</div>
-              <div>{e.description}</div>
-              <div>
-                Each {e.averageDaysOffset} days +- {e.daysSpread} days
-              </div>
-              <div className="flex gap-2">
-                <div
-                  className="underline cursor-pointer"
-                  onClick={() => openEditEventDialog(e)}
-                >
-                  Edit
-                </div>
-                <div
-                  className="underline cursor-pointer"
-                  onClick={() => openDeleteEventDialog(e)}
-                >
-                  Delete
-                </div>
-              </div>
-            </div>
+              event={e}
+              onEdit={openEditEventDialog}
+              onDelete={openDeleteEventDialog}
+            />
           );
         })}
       </div>

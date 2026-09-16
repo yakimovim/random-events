@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { HubConnectionBuilder, HttpTransportType } from "@microsoft/signalr";
 import DeleteDialog from "../forms/DeleteDialog";
+import NotificationCard from "../components/NotificationCard";
 import {
   getNotifications,
   deleteNotification,
@@ -70,6 +71,11 @@ export function Notifications() {
     remove();
   }
 
+  function openDeleteNotificationDialog(notification) {
+    setCurrentNotification(notification);
+    setIsDeleteFormOpen(true);
+  }
+
   return (
     <div>
       <DeleteDialog
@@ -91,25 +97,11 @@ export function Notifications() {
       <div className="flex flex-col">
         {notifications.map((e) => {
           return (
-            <div
-              className="flex flex-col bg-blue-400 p-2.5 m-4 rounded-sm"
+            <NotificationCard
               key={e.id}
-            >
-              <div>{e.moment}</div>
-              <div className="text-2xl">{e.name}</div>
-              <div>{e.description}</div>
-              <div className="flex gap-2">
-                <div
-                  className="underline cursor-pointer"
-                  onClick={() => {
-                    setCurrentNotification(e);
-                    setIsDeleteFormOpen(true);
-                  }}
-                >
-                  Delete
-                </div>
-              </div>
-            </div>
+              notification={e}
+              onDelete={openDeleteNotificationDialog}
+            />
           );
         })}
       </div>

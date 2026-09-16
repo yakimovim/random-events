@@ -6,10 +6,10 @@ export function Layout() {
       <div className="bg-white fixed inset-x-0 top-0">
         <div className="bg-gray-200 rounded-sm flex p-3 m-4 gap-4 items-baseline">
           <NavLink className="uppercase hidden md:block" to="/">
-            Notifications
+            Уведомления
           </NavLink>
           <NavLink className="uppercase hidden md:block" to="/events">
-            Events
+            События
           </NavLink>
         </div>
       </div>

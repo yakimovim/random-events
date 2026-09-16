@@ -17,12 +17,15 @@ export default function DeleteDialog({
         <div className="m-2">
           Вы действительно хотите удалить {description}?
         </div>
-        <div className="flex">
-          <button className="p-2 cursor-pointer" onClick={onClose}>
+        <div className="flex gap-2 justify-end mt-2">
+          <button
+            className="p-2 cursor-pointer bg-blue-500 text-white"
+            onClick={onClose}
+          >
             Отмена
           </button>
           <button
-            className="p-2 cursor-pointer"
+            className="p-2 cursor-pointer bg-blue-500 text-red-700"
             onClick={() => {
               onDelete();
               onClose();

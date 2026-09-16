@@ -39,19 +39,9 @@ var app = builder.Build();
 
 app.UseStaticFiles();
 
-//app.UseWebSockets();
-
 app.UseRouting();
 
 app.UseAuthorization();
-
-/*
-app.UseCors(builder => builder
-  .WithOrigins("http://localhost:3000") // URL вашего React-приложения
-  .AllowAnyMethod()
-  .AllowAnyHeader()
-  .AllowCredentials()); // КРИТИЧЕСКИ ВАЖНО для SignalR
-*/
 
 app.MapHub<NotificationsHub>("/api/notifications-hub");
 
