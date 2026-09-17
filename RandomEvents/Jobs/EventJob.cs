@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
 using Quartz;
 using RandomEvents.Hubs;
 using RandomEvents.Services;

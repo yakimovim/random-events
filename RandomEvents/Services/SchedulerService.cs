@@ -10,11 +10,16 @@ public class SchedulerService
 {
   private readonly IServiceProvider _serviceProvider;
   private readonly IScheduler _scheduler;
+  private readonly EmailService _emailService;
 
-  public SchedulerService(IServiceProvider serviceProvider, IScheduler scheduler)
+  public SchedulerService(
+    IServiceProvider serviceProvider,
+    IScheduler scheduler,
+    EmailService emailService)
   {
     _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
     _scheduler = scheduler ?? throw new ArgumentNullException(nameof(scheduler));
+    _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
   }
 
   public async Task ScheduleEventAsync(Event @event, CancellationToken cancellationToken)
@@ -32,6 +37,8 @@ public class SchedulerService
         notification.Id = 0;
 
         db.Notifications.Add(notification);
+
+        await _emailService.SendNotificationAsync(notification, cancellationToken);
 
         @event.NextMoment = @event.NextMoment.AddDays(GetDaysOffset(@event));
       }

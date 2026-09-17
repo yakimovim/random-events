@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Quartz;
+using RandomEvents.Configuration;
 using RandomEvents.Hubs;
 using RandomEvents.Services;
 using RandomEvents.Storage;
@@ -12,6 +13,8 @@ builder.Configuration
   .AddEnvironmentVariables();
 
 // Add services to the container.
+
+builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("Email"));
 
 builder.Services.AddDbContext<StorageContext>(optionsBuilder => {
   optionsBuilder.UseSqlite("Data Source=app.db");
@@ -29,6 +32,7 @@ builder.Services.AddQuartzHostedService(options =>
 builder.Services.AddSignalR();
 
 builder.Services.AddSingleton<SchedulerService>();
+builder.Services.AddSingleton<EmailService>();
 builder.Services.AddHostedService<InitialSchedulingService>();
 
 builder.Services.AddControllers();
