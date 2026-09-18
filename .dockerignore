@@ -1,0 +1,15 @@
+.git
+.gitignore
+**/.gitignore
+*.md
+
+**/node_modules
+**/dist
+
+**/bin
+**/obj
+**/appsettings.local.json
+**/appsettings.Development.json
+**/app.db
+**/app.db-shm
+**/app.db-wal
