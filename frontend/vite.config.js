@@ -7,7 +7,7 @@ import path from "path";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
-    outDir: path.resolve(import.meta.dirname, "../wwwroot"),
+    outDir: path.resolve(import.meta.dirname, "./dist"),
     emptyOutDir: true,
   },
   server: {

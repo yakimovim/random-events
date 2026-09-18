@@ -17,7 +17,7 @@ builder.Configuration
 builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("Email"));
 
 builder.Services.AddDbContext<StorageContext>(optionsBuilder => {
-  optionsBuilder.UseSqlite("Data Source=app.db");
+  optionsBuilder.UseSqlite("Data Source=.\\Data\\app.db");
 });
 
 builder.Services.AddQuartz(optionsBuilder =>
