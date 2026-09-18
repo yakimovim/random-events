@@ -34,6 +34,7 @@ builder.Services.AddSignalR();
 builder.Services.AddSingleton<SchedulerService>();
 builder.Services.AddSingleton<EmailService>();
 builder.Services.AddHostedService<InitialSchedulingService>();
+builder.Services.AddHostedService<InitialLoggingService>();
 
 builder.Services.AddControllers();
 
