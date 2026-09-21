@@ -1,0 +1,20 @@
+# Please, build 'random-events' image from Dockerfile before running this file.
+
+services:
+  tagged-gallery:
+    container_name: random-events
+    image: random-events
+    restart: always
+    ports:
+      - 5000:5000
+    environment:
+      Email__SmtpServerHost: ${Email__SmtpServerHost}
+      Email__SmtpServerPort: ${Email__SmtpServerPort}
+      Email__SmtpServerUser: ${Email__SmtpServerUser}
+      Email__SmtpServerPassword: ${Email__SmtpServerPassword}
+      Email__ToAddress: ${Email__ToAddress}
+      Email__FromAddress: ${Email__FromAddress}
+    volumes:
+      - random_events_data:/app/Data
+volumes:
+  random_events_data:
