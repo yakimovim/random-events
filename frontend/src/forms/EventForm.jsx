@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import EventSchema from "../models/EventSchema";
 import moment from "moment";
 import Dialog from "../components/Dialog";
+import FormField from "../components/FormField";
 
 export default function EventForm({ isOpen, onClose, onSubmitSuccess, event }) {
   if (event) {
@@ -30,74 +31,72 @@ export default function EventForm({ isOpen, onClose, onSubmitSuccess, event }) {
   };
 
   return (
-    <Dialog isOpen={isOpen} onClose={onClose} onClosing={reset} title="Событие">
+    <Dialog
+      isOpen={isOpen}
+      onClose={onClose}
+      onClosing={reset}
+      title="Событие"
+      dialogClasses="w-1/2"
+    >
       <form
         onSubmit={handleSubmit(onFormSubmit)}
-        className="flex flex-col gap-3.5 w-2xs"
+        className="flex flex-col gap-3.5"
       >
         {/* Поле ДАТЫ */}
-        <div>
-          <label className="block">Дата:</label>
-          <input className="w-full" type="date" {...register("date")} />
-          <FormError error={errors.date} />
-        </div>
+        <FormField label="Дата:" error={errors.date}>
+          <input className="form-input" type="date" {...register("date")} />
+        </FormField>
 
         {/* Поле ВРЕМЕНИ */}
-        <div>
-          <label className="block">Время:</label>
-          <input className="w-full" type="time" {...register("time")} />
-          <FormError error={errors.time} />
-        </div>
+        <FormField label="Время:" error={errors.time}>
+          <input className="form-input" type="time" {...register("time")} />
+        </FormField>
 
         {/* Поле названия */}
-        <div>
-          <label className="block">Название:</label>
-          <input className="w-full" type="text" {...register("name")} />
-          <FormError error={errors.name} />
-        </div>
+        <FormField label="Название:" error={errors.name}>
+          <input className="form-input" type="text" {...register("name")} />
+        </FormField>
 
         {/* Поле описания */}
-        <div>
-          <label className="block">Описание:</label>
-          <textarea className="w-full" rows="3" {...register("description")} />
-          <FormError error={errors.description} />
-        </div>
+        <FormField label="Описание:" error={errors.description}>
+          <textarea
+            className="form-input"
+            rows="3"
+            {...register("description")}
+          />
+        </FormField>
 
         {/* Поле среднего числа дней до следующего события */}
-        <div>
-          <label className="block">
-            Среднее число дней до следующего события:
-          </label>
+        <FormField
+          label="Среднее число дней до следующего события:"
+          error={errors.averageDaysOffset}
+        >
           <input
-            className="w-full"
+            className="form-input"
             type="number"
             {...register("averageDaysOffset")}
           />
-          <FormError error={errors.averageDaysOffset} />
-        </div>
+        </FormField>
 
         {/* Поле разброса дней до следующего события */}
-        <div>
-          <label className="block">Разброс дней до следующего события:</label>
-          <input className="w-full" type="number" {...register("daysSpread")} />
-          <FormError error={errors.daysSpread} />
-        </div>
+        <FormField
+          label="Разброс дней до следующего события:"
+          error={errors.daysSpread}
+        >
+          <input
+            className="form-input"
+            type="number"
+            {...register("daysSpread")}
+          />
+        </FormField>
 
         <button
           type="submit"
-          className="p-2 cursor-pointer bg-blue-500 text-white"
+          className="p-2 cursor-pointer bg-prussian-blue text-white rounded-2xl mt-2"
         >
           Отправить
         </button>
       </form>
     </Dialog>
   );
-}
-
-function FormError({ error }) {
-  if (!error) {
-    return null;
-  }
-
-  return <span className="text-red-600 text-xs">{error.message}</span>;
 }

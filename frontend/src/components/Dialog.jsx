@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 
-export default function DeleteEventForm({
+export default function Dialog({
   isOpen,
   title,
+  dialogClasses,
   onClose,
   onClosing,
   children,
@@ -27,9 +28,9 @@ export default function DeleteEventForm({
     <dialog
       ref={dialogRef}
       onClose={onClose}
-      className="m-auto rounded-lg border border-[#ccc] border-solid"
+      className={`m-auto rounded-lg border border-light-cyan border-solid ${dialogClasses}`}
     >
-      <div className="flex p-5 justify-between bg-[#ccc]">
+      <div className="flex p-5 justify-between bg-light-cyan">
         <h3 className="font-bold text-lg">{title}</h3>
         <button type="button" className="cursor-pointer" onClick={onClose}>
           ✕

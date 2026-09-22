@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+@theme {
+  --color-linen: #ffede1;
+  --color-ivorу: #f9fbf2;
+  --color-light-cyan: #d7f9ff;
+  --color-baby-blue-ice: #afcbff;
+  --color-prussian-blue: #0e1c36;
+}
+
+.form-input {
+  @apply w-full border-baby-blue-ice border-2 rounded-sm outline-none px-1.5;
+}
+
+a.active {
+  font-size: 1.1em;
+  text-decoration: underline;
+}

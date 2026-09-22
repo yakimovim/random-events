@@ -12,20 +12,25 @@ export default function DeleteDialog({
   }
 
   return (
-    <Dialog isOpen={isOpen} onClose={onClose} title={title}>
-      <div className="flex flex-col gap-3.5 w-2xs">
+    <Dialog
+      isOpen={isOpen}
+      onClose={onClose}
+      title={title}
+      dialogClasses="w-1/3"
+    >
+      <div className="flex flex-col gap-3.5">
         <div className="m-2">
           Вы действительно хотите удалить {description}?
         </div>
         <div className="flex gap-2 justify-end mt-2">
           <button
-            className="p-2 cursor-pointer bg-blue-500 text-white"
+            className="p-2 cursor-pointer bg-prussian-blue text-white rounded-2xl px-4"
             onClick={onClose}
           >
             Отмена
           </button>
           <button
-            className="p-2 cursor-pointer bg-blue-500 text-red-700"
+            className="p-2 cursor-pointer bg-prussian-blue text-red-400 rounded-2xl px-4"
             onClick={() => {
               onDelete();
               onClose();

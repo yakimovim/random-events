@@ -1,16 +1,13 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import HeaderLink from "./HeaderLink";
 
 export function Layout() {
   return (
-    <div>
+    <div className="text-lg">
       <div className="bg-white fixed inset-x-0 top-0">
-        <div className="bg-gray-200 rounded-sm flex p-3 m-4 gap-4 items-baseline">
-          <NavLink className="uppercase hidden md:block" to="/">
-            Уведомления
-          </NavLink>
-          <NavLink className="uppercase hidden md:block" to="/events">
-            События
-          </NavLink>
+        <div className="bg-linen rounded-lg flex p-3 pl-6 m-4 gap-6 items-baseline text-lg font-sans font-semibold">
+          <HeaderLink text="Уведомления" to="/"></HeaderLink>
+          <HeaderLink text="События" to="/events"></HeaderLink>
         </div>
       </div>
       <div className="mt-22" />
