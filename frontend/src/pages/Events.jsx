@@ -190,7 +190,7 @@ export function Events() {
           Импорт
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="grid grid-cols-2 gap-4">
         {events.map((e) => {
           return (
             <EventCard

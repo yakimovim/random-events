@@ -13,8 +13,8 @@ export default function NotificationCard({ notification, onDelete }) {
       <div className="text-2xl mt-2 text-prussian-blue font-semibold">
         {notification.name}
       </div>
-      <div>{notification.description}</div>
-      <div className="flex gap-2 mt-4">
+      <div className="pt-4 pb-8">{notification.description}</div>
+      <div className="flex gap-2 mt-auto">
         <CardButton text="Удалить" onClick={() => onDelete(notification)} />
       </div>
     </div>

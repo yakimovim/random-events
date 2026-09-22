@@ -32,7 +32,11 @@ export default function Dialog({
     >
       <div className="flex p-5 justify-between bg-light-cyan">
         <h3 className="font-bold text-lg">{title}</h3>
-        <button type="button" className="cursor-pointer" onClick={onClose}>
+        <button
+          type="button"
+          className="cursor-pointer outline-none"
+          onClick={onClose}
+        >
           ✕
         </button>
       </div>

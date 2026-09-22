@@ -18,8 +18,8 @@ export default function EventCard({ event, onEdit, onDelete }) {
       <div className="mt-2 text-2xl text-prussian-blue font-semibold">
         {event.name}
       </div>
-      <div>{event.description}</div>
-      <div className="flex gap-2 mt-4">
+      <div className="pt-4 pb-8">{event.description}</div>
+      <div className="flex gap-2 mt-auto">
         <CardButton text="Изменить" onClick={() => onEdit(event)} />
         <CardButton text="Удалить" onClick={() => onDelete(event)} />
       </div>
