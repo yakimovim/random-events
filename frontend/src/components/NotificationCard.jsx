@@ -7,7 +7,7 @@ export default function NotificationCard({ notification, onDelete }) {
   return (
     <div className="flex flex-col bg-baby-blue-ice p-2.5 m-4 rounded-sm">
       <div>
-        🕑 {notificationMoment.format("DD MMM yyyy")}{" "}
+        🕑 {notificationMoment.format("DD MMMM yyyy")}{" "}
         {notificationMoment.format("HH:mm")}
       </div>
       <div className="text-2xl mt-2 text-prussian-blue font-semibold">

@@ -11,7 +11,7 @@ export default function EventCard({ event, onEdit, onDelete }) {
     <div className="flex flex-col bg-baby-blue-ice p-2.5 m-4 rounded-sm">
       <div className="flex gap-8">
         <div>
-          🕑 {eventMoment.format("DD MMM yyyy")} {eventMoment.format("HH:mm")}
+          🕑 {eventMoment.format("DD MMMM yyyy")} {eventMoment.format("HH:mm")}
         </div>
         <div>
           {t("repeatDays", { count: event.averageDaysOffset })}{" "}
