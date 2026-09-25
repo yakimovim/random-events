@@ -1,8 +1,11 @@
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 import CardButton from "./CardButton";
 
 export default function EventCard({ event, onEdit, onDelete }) {
   const eventMoment = moment(event.nextMoment);
+
+  const { t } = useTranslation();
 
   return (
     <div className="flex flex-col bg-baby-blue-ice p-2.5 m-4 rounded-sm">
@@ -11,8 +14,8 @@ export default function EventCard({ event, onEdit, onDelete }) {
           🕑 {eventMoment.format("DD MMM yyyy")} {eventMoment.format("HH:mm")}
         </div>
         <div>
-          Повторять каждые {event.averageDaysOffset} дней ± {event.daysSpread}{" "}
-          дня
+          {t("repeatDays", { count: event.averageDaysOffset })}{" "}
+          {t("offsetDays", { count: event.daysSpread })}
         </div>
       </div>
       <div className="mt-2 text-2xl text-prussian-blue font-semibold">
