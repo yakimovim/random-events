@@ -1,5 +1,6 @@
 import moment from "moment";
 import CardButton from "./CardButton";
+import MDEditor from "@uiw/react-md-editor";
 
 export default function NotificationCard({ notification, onDelete }) {
   const notificationMoment = moment(notification.moment);
@@ -13,7 +14,15 @@ export default function NotificationCard({ notification, onDelete }) {
       <div className="text-2xl mt-2 text-prussian-blue font-semibold">
         {notification.name}
       </div>
-      <div className="pt-4 pb-8">{notification.description}</div>
+      <div className="pt-4 pb-8">
+        <MDEditor.Markdown
+          source={notification.description}
+          style={{
+            backgroundColor: "transparent",
+            color: "black",
+          }}
+        />
+      </div>
       <div className="flex gap-2 mt-auto">
         <CardButton text="Удалить" onClick={() => onDelete(notification)} />
       </div>
