@@ -1,9 +1,10 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import EventSchema from "../models/EventSchema";
 import moment from "moment";
 import Dialog from "../components/Dialog";
 import FormField from "../components/FormField";
+import MDEditor from "@uiw/react-md-editor";
 
 export default function EventForm({ isOpen, onClose, onSubmitSuccess, event }) {
   if (event) {
@@ -18,6 +19,7 @@ export default function EventForm({ isOpen, onClose, onSubmitSuccess, event }) {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(EventSchema),
@@ -59,10 +61,16 @@ export default function EventForm({ isOpen, onClose, onSubmitSuccess, event }) {
 
         {/* Поле описания */}
         <FormField label="Описание:" error={errors.description}>
-          <textarea
-            className="form-input"
-            rows="3"
-            {...register("description")}
+          <Controller
+            name="description"
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <div data-color-mode="light">
+                  <MDEditor value={value} onChange={onChange} />
+                </div>
+              );
+            }}
           />
         </FormField>
 

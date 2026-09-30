@@ -22,7 +22,7 @@ export default function EventCard({ event, onEdit, onDelete }) {
       <div className="mt-2 text-2xl text-prussian-blue font-semibold">
         {event.name}
       </div>
-      <div className="pt-4 pb-8">
+      <div className="pt-4 pb-8" data-color-mode="light">
         <MDEditor.Markdown
           source={event.description}
           style={{

@@ -14,7 +14,7 @@ export default function NotificationCard({ notification, onDelete }) {
       <div className="text-2xl mt-2 text-prussian-blue font-semibold">
         {notification.name}
       </div>
-      <div className="pt-4 pb-8">
+      <div className="pt-4 pb-8" data-color-mode="light">
         <MDEditor.Markdown
           source={notification.description}
           style={{
