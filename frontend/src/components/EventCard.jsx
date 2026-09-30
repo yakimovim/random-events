@@ -1,6 +1,7 @@
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import CardButton from "./CardButton";
+import MDEditor from "@uiw/react-md-editor";
 
 export default function EventCard({ event, onEdit, onDelete }) {
   const eventMoment = moment(event.nextMoment);
@@ -21,7 +22,15 @@ export default function EventCard({ event, onEdit, onDelete }) {
       <div className="mt-2 text-2xl text-prussian-blue font-semibold">
         {event.name}
       </div>
-      <div className="pt-4 pb-8">{event.description}</div>
+      <div className="pt-4 pb-8">
+        <MDEditor.Markdown
+          source={event.description}
+          style={{
+            backgroundColor: "transparent",
+            color: "black",
+          }}
+        />
+      </div>
       <div className="flex gap-2 mt-auto">
         <CardButton text="Изменить" onClick={() => onEdit(event)} />
         <CardButton text="Удалить" onClick={() => onDelete(event)} />

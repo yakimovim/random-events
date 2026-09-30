@@ -16,3 +16,7 @@ a.active {
   font-size: 1.1em;
   text-decoration: underline;
 }
+
+.wmde-markdown ul {
+  list-style: disc;
+}
