@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import EventForm from "../forms/EventForm";
 import DeleteDialog from "../forms/DeleteDialog";
 import EventCard from "../components/EventCard";
-import moment from "moment";
+import { parse } from "date-fns";
 import {
   getEvents,
   createEvent,
@@ -145,11 +145,12 @@ export function Events() {
           setCurrentEvent(null);
         }}
         onSubmitSuccess={(data) => {
-          const localMoment = moment(
+          const localMoment = parse(
             `${data.date} ${data.time}`,
-            "YYYY-MM-DD HH:mm",
+            "yyyy-MM-dd HH:mm",
+            new Date(),
           );
-          data.nextMoment = localMoment.toISOString(true);
+          data.nextMoment = localMoment.toISOString();
           if (currentEvent === null) {
             createNewEvent(data);
           } else {

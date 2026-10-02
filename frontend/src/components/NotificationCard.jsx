@@ -1,15 +1,16 @@
-import moment from "moment";
+import { parseISO, format } from "date-fns";
+import { ru } from "date-fns/locale";
 import CardButton from "./CardButton";
 import MDEditor from "@uiw/react-md-editor";
 
 export default function NotificationCard({ notification, onDelete }) {
-  const notificationMoment = moment(notification.moment);
+  const notificationMoment = parseISO(notification.moment);
 
   return (
     <div className="flex flex-col bg-baby-blue-ice p-2.5 m-4 rounded-sm">
       <div>
-        🕑 {notificationMoment.format("DD MMMM yyyy")}{" "}
-        {notificationMoment.format("HH:mm")}
+        🕑 {format(notificationMoment, "dd MMMM yyyy", { locale: ru })}{" "}
+        {format(notificationMoment, "HH:mm", { locale: ru })}
       </div>
       <div className="text-2xl mt-2 text-prussian-blue font-semibold">
         {notification.name}

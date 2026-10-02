@@ -1,10 +1,11 @@
-import moment from "moment";
+import { parseISO, format } from "date-fns";
+import { ru } from "date-fns/locale";
 import { useTranslation } from "react-i18next";
 import CardButton from "./CardButton";
 import MDEditor from "@uiw/react-md-editor";
 
 export default function EventCard({ event, onEdit, onDelete }) {
-  const eventMoment = moment(event.nextMoment);
+  const eventMoment = parseISO(event.nextMoment);
 
   const { t } = useTranslation();
 
@@ -12,7 +13,8 @@ export default function EventCard({ event, onEdit, onDelete }) {
     <div className="flex flex-col bg-baby-blue-ice p-2.5 m-4 rounded-sm">
       <div className="flex gap-8">
         <div>
-          🕑 {eventMoment.format("DD MMMM yyyy")} {eventMoment.format("HH:mm")}
+          🕑 {format(eventMoment, "dd MMMM yyyy", { locale: ru })}{" "}
+          {format(eventMoment, "HH:mm", { locale: ru })}
         </div>
         <div>
           {t("repeatDays", { count: event.averageDaysOffset })}{" "}

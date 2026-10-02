@@ -1,7 +1,8 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import EventSchema from "../models/EventSchema";
-import moment from "moment";
+import { parseISO, format } from "date-fns";
+import { ru } from "date-fns/locale";
 import Dialog from "../components/Dialog";
 import FormField from "../components/FormField";
 import MDEditor from "@uiw/react-md-editor";
@@ -10,9 +11,9 @@ export default function EventForm({ isOpen, onClose, onSubmitSuccess, event }) {
   if (event) {
     event = { ...event };
     event.description = event.description || "";
-    const nextMoment = moment(event.nextMoment);
-    event.date = nextMoment.format("YYYY-MM-DD");
-    event.time = nextMoment.format("HH:mm");
+    const nextMoment = parseISO(event.nextMoment);
+    event.date = format(nextMoment, "yyyy-MM-dd", { locale: ru });
+    event.time = format(nextMoment, "HH:mm", { locale: ru });
   }
 
   const {
