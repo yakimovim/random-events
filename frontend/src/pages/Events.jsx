@@ -145,12 +145,7 @@ export function Events() {
           setCurrentEvent(null);
         }}
         onSubmitSuccess={(data) => {
-          const localMoment = parse(
-            `${data.date} ${data.time}`,
-            "yyyy-MM-dd HH:mm",
-            new Date(),
-          );
-          data.nextMoment = localMoment.toISOString();
+          data.nextMoment = data.nextMomentDateTime.toISOString();
           if (currentEvent === null) {
             createNewEvent(data);
           } else {

@@ -6,15 +6,19 @@ import { ru } from "date-fns/locale";
 import Dialog from "../components/Dialog";
 import FormField from "../components/FormField";
 import MDEditor from "@uiw/react-md-editor";
+import DatePicker, { registerLocale } from "react-datepicker";
+import { useMemo } from "react";
+
+registerLocale("ru", ru);
 
 export default function EventForm({ isOpen, onClose, onSubmitSuccess, event }) {
   if (event) {
     event = { ...event };
     event.description = event.description || "";
-    const nextMoment = parseISO(event.nextMoment);
-    event.date = format(nextMoment, "yyyy-MM-dd", { locale: ru });
-    event.time = format(nextMoment, "HH:mm", { locale: ru });
+    event.nextMomentDateTime = parseISO(event.nextMoment);
   }
+
+  const defaultDate = useMemo(() => new Date(), []);
 
   const {
     register,
@@ -24,7 +28,7 @@ export default function EventForm({ isOpen, onClose, onSubmitSuccess, event }) {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(EventSchema),
-    values: event || { description: "" },
+    values: event || { nextMomentDateTime: defaultDate, description: "" },
   });
 
   // 4. Обработка успешной отправки
@@ -46,13 +50,29 @@ export default function EventForm({ isOpen, onClose, onSubmitSuccess, event }) {
         className="flex flex-col gap-3.5"
       >
         {/* Поле ДАТЫ */}
-        <FormField label="Дата:" error={errors.date}>
-          <input className="form-input" type="date" {...register("date")} />
-        </FormField>
-
-        {/* Поле ВРЕМЕНИ */}
-        <FormField label="Время:" error={errors.time}>
-          <input className="form-input" type="time" {...register("time")} />
+        <FormField
+          label="Момент срабатывания:"
+          error={errors.nextMomentDateTime}
+        >
+          <Controller
+            name="nextMomentDateTime"
+            control={control}
+            render={({ field: { value, onChange } }) => {
+              return (
+                <DatePicker
+                  className="form-input"
+                  locale="ru"
+                  showIcon
+                  selected={value}
+                  onChange={onChange}
+                  showTimeSelect
+                  dateFormat="dd MMMM yyyy HH:mm"
+                  timeFormat="HH:mm"
+                  timeIntervals={15}
+                />
+              );
+            }}
+          />
         </FormField>
 
         {/* Поле названия */}

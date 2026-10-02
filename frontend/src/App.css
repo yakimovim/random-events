@@ -20,3 +20,11 @@ a.active {
 .wmde-markdown ul {
   list-style: disc;
 }
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker-wrapper .react-datepicker__input-container input {
+  padding-left: 2em;
+}

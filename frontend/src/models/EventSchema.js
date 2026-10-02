@@ -1,8 +1,7 @@
 import { z } from "zod";
 
 const EventSchema = z.object({
-  date: z.string().nonempty("Выберите дату"),
-  time: z.string().nonempty("Выберите время"),
+  nextMomentDateTime: z.date(),
   name: z
     .string()
     .nonempty("Введите название")

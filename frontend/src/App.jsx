@@ -1,3 +1,4 @@
+import "react-datepicker/dist/react-datepicker.css";
 import "./App.css";
 import "./i18n.js";
 
