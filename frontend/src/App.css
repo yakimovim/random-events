@@ -9,7 +9,7 @@
 }
 
 .form-input {
-  @apply w-full border-baby-blue-ice border-2 rounded-sm outline-none px-1.5;
+  @apply w-full border-baby-blue-ice border-2 rounded-sm outline-none px-2.5 py-1.5;
 }
 
 a.active {
@@ -23,8 +23,4 @@ a.active {
 
 .react-datepicker-wrapper {
   width: 100%;
-}
-
-.react-datepicker-wrapper .react-datepicker__input-container input {
-  padding-left: 2em;
 }

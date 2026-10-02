@@ -1,7 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import EventSchema from "../models/EventSchema";
-import { parseISO, format } from "date-fns";
+import { parseISO } from "date-fns";
 import { ru } from "date-fns/locale";
 import Dialog from "../components/Dialog";
 import FormField from "../components/FormField";
@@ -62,13 +62,13 @@ export default function EventForm({ isOpen, onClose, onSubmitSuccess, event }) {
                 <DatePicker
                   className="form-input"
                   locale="ru"
-                  showIcon
                   selected={value}
                   onChange={onChange}
                   showTimeSelect
-                  dateFormat="dd MMMM yyyy HH:mm"
+                  dateFormat="📆 dd MMMM yyyy 🕑 HH:mm"
                   timeFormat="HH:mm"
                   timeIntervals={15}
+                  timeCaption="Время"
                 />
               );
             }}

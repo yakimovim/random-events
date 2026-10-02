@@ -13,7 +13,7 @@ export default function EventCard({ event, onEdit, onDelete }) {
     <div className="flex flex-col bg-baby-blue-ice p-2.5 m-4 rounded-sm">
       <div className="flex gap-8">
         <div>
-          🕑 {format(eventMoment, "dd MMMM yyyy", { locale: ru })}{" "}
+          📆 {format(eventMoment, "dd MMMM yyyy", { locale: ru })} 🕑{" "}
           {format(eventMoment, "HH:mm", { locale: ru })}
         </div>
         <div>

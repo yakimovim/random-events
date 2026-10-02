@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import EventForm from "../forms/EventForm";
 import DeleteDialog from "../forms/DeleteDialog";
 import EventCard from "../components/EventCard";
-import { parse } from "date-fns";
 import {
   getEvents,
   createEvent,

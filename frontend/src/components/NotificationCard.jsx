@@ -9,7 +9,7 @@ export default function NotificationCard({ notification, onDelete }) {
   return (
     <div className="flex flex-col bg-baby-blue-ice p-2.5 m-4 rounded-sm">
       <div>
-        🕑 {format(notificationMoment, "dd MMMM yyyy", { locale: ru })}{" "}
+        📆 {format(notificationMoment, "dd MMMM yyyy", { locale: ru })} 🕑{" "}
         {format(notificationMoment, "HH:mm", { locale: ru })}
       </div>
       <div className="text-2xl mt-2 text-prussian-blue font-semibold">
