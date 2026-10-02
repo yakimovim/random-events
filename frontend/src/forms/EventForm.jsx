@@ -24,7 +24,7 @@ export default function EventForm({ isOpen, onClose, onSubmitSuccess, event }) {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(EventSchema),
-    values: event || {},
+    values: event || { description: "" },
   });
 
   // 4. Обработка успешной отправки
